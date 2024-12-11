@@ -52,7 +52,7 @@ select *, CASE  WHEN product_name LIKE '%pepper%' THEN 1 ELSE 0 END AS pepper_fl
 --JOIN
 /* 1. Write a query that INNER JOINs the vendor table to the vendor_booth_assignments table on the 
 vendor_id field they both have in common, and sorts the result by vendor_name, then market_date. */
-
+SELECT * FROM vendor JOIN vendor_booth_assignments ON  vendor.vendor_id = vendor_booth_assignments.vendor_id ORDER BY vendor.vendor_name, vendor_booth_assignments.market_date
 
 
 
