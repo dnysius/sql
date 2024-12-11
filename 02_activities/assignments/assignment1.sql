@@ -27,9 +27,11 @@ filtered by vendor IDs between 8 and 10 (inclusive) using either:
 	2.  one condition using BETWEEN
 */
 -- option 1
+SELECT quantity*cost_to_customer_per_qty AS price, * FROM customer_purchases WHERE vendor_id >= 8 AND vendor_id<=10
 
 
 -- option 2
+SELECT quantity*cost_to_customer_per_qty AS price, * FROM customer_purchases WHERE vendor_id BETWEEN 8 AND 10
 
 
 
