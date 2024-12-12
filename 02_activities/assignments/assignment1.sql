@@ -131,7 +131,7 @@ INSERT INTO temp.new_vendor VALUES (10, "Thomass Superfood Store", "Fresh Focuse
 
 HINT: you might need to search for strfrtime modifers sqlite on the web to know what the modifers for month 
 and year are! */
-
+SELECT customer_id, STRFTIME('%Y', market_date) as year, STRFTIME('%m', market_date) AS month, * FROM customer_purchases
 
 
 /* 2. Using the previous query as a base, determine how much money each customer spent in April 2022. 
