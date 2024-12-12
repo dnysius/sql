@@ -52,7 +52,17 @@ select *, CASE  WHEN product_name LIKE '%pepper%' THEN 1 ELSE 0 END AS pepper_fl
 --JOIN
 /* 1. Write a query that INNER JOINs the vendor table to the vendor_booth_assignments table on the 
 vendor_id field they both have in common, and sorts the result by vendor_name, then market_date. */
-SELECT * FROM vendor JOIN vendor_booth_assignments ON  vendor.vendor_id = vendor_booth_assignments.vendor_id ORDER BY vendor.vendor_name, vendor_booth_assignments.market_date
+SELECT 
+	* 
+FROM 
+	vendor 
+JOIN 
+	vendor_booth_assignments 
+ON  
+	vendor.vendor_id = vendor_booth_assignments.vendor_id 
+ORDER BY 
+	vendor.vendor_name, 
+	vendor_booth_assignments.market_date
 
 
 
@@ -61,7 +71,12 @@ SELECT * FROM vendor JOIN vendor_booth_assignments ON  vendor.vendor_id = vendor
 -- AGGREGATE
 /* 1. Write a query that determines how many times each vendor has rented a booth 
 at the farmer’s market by counting the vendor booth assignments per vendor_id. */
-
+SELECT 
+	vendor_id, 
+	count(vendor_id) as num_rent 
+FROM 
+	vendor_booth_assignments 
+GROUP BY vendor_id
 
 
 /* 2. The Farmer’s Market Customer Appreciation Committee wants to give a bumper 
@@ -69,7 +84,22 @@ sticker to everyone who has ever spent more than $2000 at the market. Write a qu
 of customers for them to give stickers to, sorted by last name, then first name. 
 
 HINT: This query requires you to join two tables, use an aggregate function, and use the HAVING keyword. */
-
+SELECT c.customer_last_name, 
+	c.customer_first_name, 
+	SUM(p.quantity*p.cost_to_customer_per_qty) as total_purchases 
+FROM 
+	customer c 
+JOIN 
+	customer_purchases p 
+ON 
+	c.customer_id = p.customer_id 
+GROUP BY 
+	c.customer_id 
+HAVING 
+	SUM(p.quantity*p.cost_to_customer_per_qty) >2000 
+ORDER BY 
+	c.customer_last_name, 
+	c.customer_first_name
 
 
 --Temp Table
