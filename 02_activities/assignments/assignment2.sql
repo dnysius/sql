@@ -100,6 +100,17 @@ Remove any trailing or leading whitespaces. Don't just use a case statement for 
 | Habanero Peppers - Organic | Organic     |
 
 Hint: you might need to use INSTR(product_name,'-') to find the hyphens. INSTR will help split the column. */
+SELECT 
+  *, 
+  SUBSTR(
+    product_name, 
+    NULLIF(
+      INSTR(product_name, '-'), 
+      0
+    ) + 2
+  ) 
+FROM 
+  product
 
 
 
