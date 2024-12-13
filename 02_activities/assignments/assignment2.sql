@@ -233,13 +233,20 @@ GROUP BY
 This table will contain only products where the `product_qty_type = 'unit'`. 
 It should use all of the columns from the product table, as well as a new column for the `CURRENT_TIMESTAMP`.  
 Name the timestamp column `snapshot_timestamp`. */
-
-
+CREATE TABLE "product_units"  (
+  "product_id" int(11) NOT NULL,
+  "product_name" varchar(45) DEFAULT NULL,
+  "product_size" varchar(45) DEFAULT NULL,
+  "product_category_id" int(11) NOT NULL,
+  "product_qty_type" varchar(45) DEFAULT NULL,
+  "snapshot_timestamp" datetime,
+  PRIMARY KEY ("product_id","product_category_id")
+);
 
 /*2. Using `INSERT`, add a new row to the product_units table (with an updated timestamp). 
 This can be any product you desire (e.g. add another record for Apple Pie). */
-
-
+--INSERT INTO "product_units" SELECT *, datetime('now') FROM product WHERE product_qty_type = 'unit'
+INSERT INTO "product_units" VALUES( 98, 'Apple Pie', '10 "', 3, 'unit', datetime('now') )
 
 -- DELETE
 /* 1. Delete the older record for the whatever product you added. 
