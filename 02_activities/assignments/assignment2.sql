@@ -49,7 +49,18 @@ ORDER BY
 /* 2. Reverse the numbering of the query from a part so each customer’s most recent visit is labeled 1, 
 then write another query that uses this one as a subquery (or temp table) and filters the results to 
 only the customer’s most recent visit. */
-
+SELECT * FROM
+( SELECT 
+	*, 
+	DENSE_RANK ( ) OVER (
+			PARTITION BY customer_id 
+			ORDER BY market_date DESC )  AS r
+FROM 
+	customer_purchases 
+ORDER BY 
+	customer_id
+	, market_date
+	, transaction_time ) q WHERE q.r = 1
 
 
 /* 3. Using a COUNT() window function, include a value along with each row of the 
