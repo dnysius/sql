@@ -193,6 +193,39 @@ Think a bit about the row counts: how many distinct vendors, product names are t
 How many customers are there (y). 
 Before your final group by you should have the product of those two queries (x*y).  */
 
+WITH cte AS (
+SELECT  
+	vendor_id, 
+	product_id, 
+	original_price, 
+	original_price*5 AS five_sales_cost 
+FROM 
+	vendor_inventory 
+GROUP BY 
+	vendor_id, 
+	product_id, 
+	original_price 
+), cte2 AS (
+SELECT 
+	customer_id 
+FROM 
+	customer_purchases 
+GROUP BY 
+	customer_id
+)
+SELECT 
+	vendor.vendor_name, 
+	product.product_name, 
+	SUM(cte.five_sales_cost) AS revenue 
+FROM 
+	cte, cte2 
+JOIN 
+	vendor ON vendor.vendor_id = cte.vendor_id 
+JOIN 
+	product ON product.product_id = cte.product_id 
+GROUP BY  
+	cte.vendor_id, 
+	cte.product_id
 
 
 -- INSERT
