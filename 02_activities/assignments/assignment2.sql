@@ -245,7 +245,7 @@ CREATE TABLE "product_units"  (
 
 /*2. Using `INSERT`, add a new row to the product_units table (with an updated timestamp). 
 This can be any product you desire (e.g. add another record for Apple Pie). */
---INSERT INTO "product_units" SELECT *, datetime('now') FROM product WHERE product_qty_type = 'unit'
+INSERT INTO "product_units" SELECT *, datetime('now') FROM product WHERE product_qty_type = 'unit'
 INSERT INTO 
 	"product_units" 
 VALUES( 98, 'Apple Pie', '11"', 3, 'unit', datetime('now') )
