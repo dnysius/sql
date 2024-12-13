@@ -273,7 +273,25 @@ Third, SET current_quantity = (...your select statement...), remembering that WH
 Finally, make sure you have a WHERE statement to update the right row, 
 	you'll need to use product_units.product_id to refer to the correct row within the product_units table. 
 When you have all of these components, you can run the update statement. */
-
+UPDATE product_units 
+	SET current_quantity = latest.latest_quantity
+	FROM 
+	( 
+	SELECT 
+	p.product_id, 
+	COALESCE(sub.quantity, 0) AS latest_quantity
+FROM
+	product p 
+LEFT JOIN 
+	( SELECT *, RANK() OVER ( PARTITION BY product_id ORDER BY market_date DESC) AS r FROM vendor_inventory ) sub 
+ON 
+	p.product_id = sub.product_id 
+WHERE 
+	sub.r=1 
+OR
+	sub.r IS NULL
+	) latest
+	WHERE product_units.product_id = latest.product_id
 
 
 
