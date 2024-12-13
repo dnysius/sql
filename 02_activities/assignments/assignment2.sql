@@ -115,7 +115,19 @@ FROM
 
 
 /* 2. Filter the query to show any product_size value that contain a number with REGEXP. */
-
+SELECT 
+  *, 
+  SUBSTR(
+    product_name, 
+    NULLIF(
+      INSTR(product_name, '-'), 
+      0
+    ) + 2
+  ) 
+FROM 
+  product 
+WHERE 
+  product_size REGEXP '\d'
 
 
 -- UNION
