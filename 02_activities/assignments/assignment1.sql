@@ -198,6 +198,6 @@ SELECT
 FROM 
 	customer_purchases
 WHERE 
-	STRFTIME('%Y', market_date) ='2022' AND STRFTIME('%m', market_date) = '05' 
+	STRFTIME('%Y', market_date) ='2022' AND STRFTIME('%m', market_date) = '04' 
 GROUP BY 
 	customer_id
