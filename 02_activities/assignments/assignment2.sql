@@ -140,6 +140,43 @@ HINT: There are a possibly a few ways to do this query, but if you're struggling
 3) Query the second temp table twice, once for the best day, once for the worst day, 
 with a UNION binding them. */
 
+WITH worst_sales AS (
+  SELECT 
+    market_date, 
+    SUM( quantity * cost_to_customer_per_qty ) AS total_sales, 
+    RANK() OVER ( ORDER BY SUM( quantity * cost_to_customer_per_qty ) ASC ) AS r
+	FROM 
+    customer_purchases 
+  GROUP BY 
+    market_date
+), best_sales AS (
+  SELECT 
+    market_date, 
+    SUM( quantity * cost_to_customer_per_qty ) AS total_sales, 
+    RANK() OVER ( ORDER BY SUM( quantity * cost_to_customer_per_qty ) DESC ) AS r
+  FROM 
+    customer_purchases 
+  GROUP BY 
+    market_date
+) 
+
+SELECT 
+  market_date, 
+  total_sales, 
+  'best day' AS "best/worst day" 
+FROM 
+  best_sales 
+WHERE 
+  r = 1 
+UNION ALL 
+SELECT 
+  market_date, 
+  total_sales, 
+  'worst day' AS "best/worst day" 
+FROM 
+  worst_sales 
+WHERE 
+  r = 1
 
 
 
