@@ -65,7 +65,28 @@ ORDER BY
 
 /* 3. Using a COUNT() window function, include a value along with each row of the 
 customer_purchases table that indicates how many different times that customer has purchased that product_id. */
-
+/* Running count version
+SELECT z
+  *, 
+  COUNT(product_id) OVER (
+    PARTITION BY customer_id, 
+    product_id 
+    ORDER BY 
+      market_date
+  ) as num_purchases 
+FROM 
+  customer_purchases */
+SELECT 
+  *, 
+  COUNT(product_id) OVER (
+    PARTITION BY customer_id, product_id
+  ) as num_purchases 
+FROM 
+  customer_purchases 
+ORDER BY 
+  customer_id, 
+  product_id, 
+  market_date
 
 
 -- String manipulations
