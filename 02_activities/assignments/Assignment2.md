@@ -54,7 +54,10 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 **HINT:** search type 1 vs type 2 slowly changing dimensions. 
 
 ```
-Your answer...
+CUSTOMER_ADDRESS table can be linked to the customer table via a customer_id field. It will contain fields to store address, country information, as well as system information such as the last updated date and the entry creation date. It may also be useful to allow for multiple addresses per customer, so the customer_id field may not be unique; instead, we can have a flag to indicate if an address listed for a customer is the primary/default address to be used in the profile or as a shipping address. 
+1. Type 1 Slowly Changing Dimension will overwrite rows the table and does not retain history. 
+2. Type 2 Slowly Changing Dimension will retain the change history in the table.
+Considering addresses is sensitive info it would be best to use Type 1 architecture. This minimizes the amount of unused sensitive information being stored in the database. Only when there is a need in analytics/operations to keep the historical information, should Type 2 be considered.
 ```
 
 ***
