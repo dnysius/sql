@@ -152,7 +152,8 @@ When inserting the new vendor, you need to appropriately align the columns to be
 -> To insert the new row use VALUES, specifying the value you want for each column:
 VALUES(col1,col2,col3,col4,col5) 
 */
-CREATE TABLE "temp"."new_vendor" (
+
+/*CREATE TABLE "temp"."new_vendor" (
   "vendor_id" int(11) NOT NULL ,
   "vendor_name" varchar(45) NOT NULL,
   "vendor_type" varchar(45) NOT NULL,
@@ -162,14 +163,12 @@ CREATE TABLE "temp"."new_vendor" (
   UNIQUE  ("vendor_id"),
   UNIQUE  ("vendor_name")
 )
+*/
+CREATE TEMPORARY TABLE new_vendor AS
+SELECT * FROM vendor
+
 INSERT INTO 
 	new_vendor 
-SELECT 
-	* 
-FROM 
-	vendor
-INSERT INTO 
-	temp.new_vendor 
 VALUES 
 	(10, "Thomass Superfood Store", "Fresh Focused", "Thomas", "Rosenthal")
 
