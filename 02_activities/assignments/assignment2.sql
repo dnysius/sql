@@ -239,8 +239,7 @@ CREATE TABLE "product_units"  (
   "product_size" varchar(45) DEFAULT NULL,
   "product_category_id" int(11) NOT NULL,
   "product_qty_type" varchar(45) DEFAULT NULL,
-  "snapshot_timestamp" datetime,
-  PRIMARY KEY ("product_id","product_category_id")
+  "snapshot_timestamp" datetime
 );
 
 /*2. Using `INSERT`, add a new row to the product_units table (with an updated timestamp). 
@@ -248,13 +247,15 @@ This can be any product you desire (e.g. add another record for Apple Pie). */
 INSERT INTO "product_units" SELECT *, datetime('now') FROM product WHERE product_qty_type = 'unit'
 INSERT INTO 
 	"product_units" 
-VALUES( 98, 'Apple Pie', '11"', 3, 'unit', datetime('now') )
+VALUES( 7, 'Apple Pie', '10"', 3, 'unit', datetime('now') )
 
 -- DELETE
 /* 1. Delete the older record for the whatever product you added. 
 HINT: If you don't specify a WHERE clause, you are going to have a bad time.*/
 DELETE FROM "product_units"
-WHERE product_id=98;
+WHERE 
+(product_id, snapshot_timestamp) =  
+(SELECT product_id, snapshot_timestamp FROM product_units WHERE product_id=7 ORDER BY snapshot_timestamp ASC LIMIT 1)
 
 
 -- UPDATE
